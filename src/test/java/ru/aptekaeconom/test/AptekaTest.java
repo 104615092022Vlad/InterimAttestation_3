@@ -28,6 +28,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
+    @RepeatedTest(10)
     public void selectAnySubcategory() {
         int n = 0;
         String categoryName;
@@ -69,6 +70,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Откладывание товара")
+    @RepeatedTest(10)
     public void saveProduct() {
         int n = 1;
         PageTop pageTop = new PageTop();
@@ -115,6 +117,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
+    @RepeatedTest(10)
     public void addToCart() {
         int n = 1;
         PageTop pageTop = new PageTop();
