@@ -27,7 +27,7 @@ public class AptekaTest {
     }
 
     @Test
-    @DisplayName("Выбор подкатегории из каталога товаров")
+    @DisplayName("Р’С‹Р±РѕСЂ РїРѕРґРєР°С‚РµРіРѕСЂРёРё РёР· РєР°С‚Р°Р»РѕРіР° С‚РѕРІР°СЂРѕРІ")
     public void selectAnySubcategory() {
         Random r = new Random();
         int n = r.nextInt(8);
@@ -42,22 +42,22 @@ public class AptekaTest {
         categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
-        step("Выбор подкатегории", () -> {
+        step("Р’С‹Р±РѕСЂ РїРѕРґРєР°С‚РµРіРѕСЂРёРё", () -> {
             subcategory.click();
         });
 
-        step("В списке товаров есть хотя бы один", () -> {
+        step("Р’ СЃРїРёСЃРєРµ С‚РѕРІР°СЂРѕРІ РµСЃС‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРёРЅ", () -> {
             assertThat(productsPage.productsGrid.size()).isGreaterThanOrEqualTo(1);
         });
 
-        step("Отображение хлебных крошек", () -> {
-            assertThat(pageTop.breadCrumbs.get(0).getText()).isEqualTo("Главная");
-            assertThat(pageTop.breadCrumbs.get(1).getText()).isEqualTo("Каталог");
+        step("РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С…Р»РµР±РЅС‹С… РєСЂРѕС€РµРє", () -> {
+            assertThat(pageTop.breadCrumbs.get(0).getText()).isEqualTo("Р“Р»Р°РІРЅР°СЏ");
+            assertThat(pageTop.breadCrumbs.get(1).getText()).isEqualTo("РљР°С‚Р°Р»РѕРі");
             assertThat(pageTop.breadCrumbs.get(2).getText()).isEqualTo(categoryName);
             assertThat(pageTop.breadCrumbs.get(3).getText()).isEqualTo(subcategoryName);
         });
 
-        step("Отображение подкатегории в каталогах", () -> {
+        step("РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РїРѕРґРєР°С‚РµРіРѕСЂРёРё РІ РєР°С‚Р°Р»РѕРіР°С…", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
             assertThat(productsPage.selectSideSubcategory(n).get(indexOfSubcategory).
@@ -69,7 +69,7 @@ public class AptekaTest {
     }
 
     @Test
-    @DisplayName("Откладывание товара")
+    @DisplayName("РћС‚РєР»Р°РґС‹РІР°РЅРёРµ С‚РѕРІР°СЂР°")
     public void saveProduct() {
         Random r = new Random();
         int n = r.nextInt(8);
@@ -77,46 +77,46 @@ public class AptekaTest {
         ProductsPage productsPage = new ProductsPage();
         int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
 
-        step("Выбор подкатегории из каталога", () -> {
+        step("Р’С‹Р±РѕСЂ РїРѕРґРєР°С‚РµРіРѕСЂРёРё РёР· РєР°С‚Р°Р»РѕРіР°", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
         int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
-        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
+        SelenideElement product = productsPage.productsGrid.filter(text("Р’ РЅР°Р»РёС‡РёРё")).get(indexOfProduct);
 
-        step("Добавление товара в список отложенных", () -> {
+        step("Р”РѕР±Р°РІР»РµРЅРёРµ С‚РѕРІР°СЂР° РІ СЃРїРёСЃРѕРє РѕС‚Р»РѕР¶РµРЅРЅС‹С…", () -> {
             productsPage.grid.shouldBe(Condition.visible);
-            product.$(".wish_item_button [title]").shouldHave(attribute("title", "Отложить"));
+            product.$(".wish_item_button [title]").shouldHave(attribute("title", "РћС‚Р»РѕР¶РёС‚СЊ"));
             product.$(".wish_item_button").click();
         });
 
         String productPrice = product.$(" .price_value").getAttribute("innerText");
 
-        step("Текст кнопки желаемого корректен", () -> {
+        step("РўРµРєСЃС‚ РєРЅРѕРїРєРё Р¶РµР»Р°РµРјРѕРіРѕ РєРѕСЂСЂРµРєС‚РµРЅ", () -> {
             pageTop.wishButton.
-                    shouldHave(attribute("title", "В отложенных товаров на " + productPrice + " руб."));
+                    shouldHave(attribute("title", "Р’ РѕС‚Р»РѕР¶РµРЅРЅС‹С… С‚РѕРІР°СЂРѕРІ РЅР°" + productPrice + " СЂСѓР±."));
         });
 
-        step("Переход в корзину", () -> {
+        step("РџРµСЂРµС…РѕРґ РІ РєРѕСЂР·РёРЅСѓ", () -> {
             pageTop.wishButton.click();
-            assertThat(pageTop.pageTitle.getAttribute("innerText")).isEqualTo("Корзина");
+            assertThat(pageTop.pageTitle.getAttribute("innerText")).isEqualTo("РљРѕСЂР·РёРЅР°");
         });
 
         CartPage cartPage = new CartPage();
 
-        step("Товар имеет статус отложенного", () -> {
-            cartPage.alertMessage.shouldHave(partialText("Товар отложен"));
+        step("РўРѕРІР°СЂ РёРјРµРµС‚ СЃС‚Р°С‚СѓСЃ РѕС‚Р»РѕР¶РµРЅРЅРѕРіРѕ", () -> {
+            cartPage.alertMessage.shouldHave(partialText("РўРѕРІР°СЂ РѕС‚Р»РѕР¶РµРЅ"));
         });
 
-        step("Итоговая сумма не изменилась", () -> {
-            assertThat(cartPage.totalSum.getAttribute("innerText")).isEqualTo("0 руб.");
+        step("РС‚РѕРіРѕРІР°СЏ СЃСѓРјРјР° РЅРµ РёР·РјРµРЅРёР»Р°СЃСЊ", () -> {
+            assertThat(cartPage.totalSum.getAttribute("innerText")).isEqualTo("0 СЂСѓР±.");
         });
 
         closeWebDriver();
     }
 
     @Test
-    @DisplayName("Добавление отложенного товара в корзину")
+    @DisplayName("Р”РѕР±Р°РІР»РµРЅРёРµ РѕС‚Р»РѕР¶РµРЅРЅРѕРіРѕ С‚РѕРІР°СЂР° РІ РєРѕСЂР·РёРЅСѓ")
     public void addToCart() {
         Random r = new Random();
         int n = r.nextInt(8);
@@ -124,34 +124,34 @@ public class AptekaTest {
         ProductsPage productsPage = new ProductsPage();
         int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
 
-        step("Выбор подкатегории из каталога", () -> {
+        step("Р’С‹Р±РѕСЂ РїРѕРґРєР°С‚РµРіРѕСЂРёРё РёР· РєР°С‚Р°Р»РѕРіР°", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
         int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
-        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
+        SelenideElement product = productsPage.productsGrid.filter(text("Р’ РЅР°Р»РёС‡РёРё")).get(indexOfProduct);
 
-        step("Добавление товара в список отложенных", () -> {
+        step("Р”РѕР±Р°РІР»РµРЅРёРµ С‚РѕРІР°СЂР° РІ СЃРїРёСЃРѕРє РѕС‚Р»РѕР¶РµРЅРЅС‹С…", () -> {
             productsPage.grid.shouldBe(Condition.visible);
             product.$(".wish_item_button").click();
         });
 
         String productPrice = product.$(" .price_value").getAttribute("innerText");
 
-        step("Переход в корзину", () -> {
+        step("РџРµСЂРµС…РѕРґ РІ РєРѕСЂР·РёРЅСѓ", () -> {
             pageTop.wishButton.click();
         });
 
         CartPage cartPage = new CartPage();
 
-        step("Добавление отложенного товара к заказу", () -> {
+        step("Р”РѕР±Р°РІР»РµРЅРёРµ РѕС‚Р»РѕР¶РµРЅРЅРѕРіРѕ С‚РѕРІР°СЂР° Рє Р·Р°РєР°Р·Сѓ", () -> {
             cartPage.addToOrderButton.click();
         });
 
-        step("Проверка деталей заказа", () -> {
-            assertThat(cartPage.productCountMessage.getAttribute("innerText")).isEqualTo("В корзине 1 товар");
+        step("РџСЂРѕРІРµСЂРєР° РґРµС‚Р°Р»РµР№ Р·Р°РєР°Р·Р°", () -> {
+            assertThat(cartPage.productCountMessage.getAttribute("innerText")).isEqualTo("Р’ РєРѕСЂР·РёРЅРµ 1 С‚РѕРІР°СЂ");
             cartPage.productCounter.shouldHave(attribute("value", "1"));
-            assertThat(cartPage.productPrice.getAttribute("innerText")).isEqualTo(productPrice + " руб.");
+            assertThat(cartPage.productPrice.getAttribute("innerText")).isEqualTo(productPrice + " СЂСѓР±.");
         });
 
         closeWebDriver();
