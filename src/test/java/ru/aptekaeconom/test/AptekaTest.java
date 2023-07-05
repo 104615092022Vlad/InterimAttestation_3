@@ -94,7 +94,7 @@ public class AptekaTest {
 
         step("Текст кнопки желаемого корректен", () -> {
             pageTop.wishButton.
-                    shouldHave(attribute("title", "В отложенных товаров на" + productPrice + " руб."));
+                    shouldHave(attribute("title", "В отложенных товаров на " + productPrice + " руб."));
         });
 
         step("Переход в корзину", () -> {
@@ -117,6 +117,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
+    @RepeatedTest(10)
     public void addToCart() {
         Random r = new Random();
         int n = r.nextInt(8);
