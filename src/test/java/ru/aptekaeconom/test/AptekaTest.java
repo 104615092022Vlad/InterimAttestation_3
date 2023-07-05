@@ -28,16 +28,16 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(10)
     public void selectAnySubcategory() {
-        int n = 0;
+        Random r = new Random();
+        int n = r.nextInt(1, 5);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
         ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = subcategories.size() - 2;
+        int indexOfSubcategory = r.nextInt(0, subcategories.size());
         SelenideElement subcategory = subcategories.get(indexOfSubcategory);
         categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
@@ -70,18 +70,18 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Откладывание товара")
-    @RepeatedTest(10)
     public void saveProduct() {
-        int n = 1;
+        Random r = new Random();
+        int n = r.nextInt(1, 5);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = 13;
+        int indexOfSubcategory = r.nextInt(0, pageTop.selectSubcategoriesList(n).size());
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = productsPage.productsGrid.size() - 5;
+        int indexOfProduct = r.nextInt(0, productsPage.productsGrid.size());
         SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
@@ -117,18 +117,18 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
-    @RepeatedTest(10)
     public void addToCart() {
-        int n = 1;
+        Random r = new Random();
+        int n = r.nextInt(1, 5);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = 13;
+        int indexOfSubcategory = r.nextInt(0, pageTop.selectSubcategoriesList(n).size());
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = 5;
+        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
         SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
