@@ -123,7 +123,7 @@ public class AptekaTest {
         int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size() - 1);
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
