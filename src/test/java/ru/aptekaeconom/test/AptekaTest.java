@@ -28,6 +28,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
+    @RepeatedTest(10)
     public void selectAnySubcategory() {
         Random r = new Random();
         int n = r.nextInt(1, 5);
@@ -70,6 +71,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Откладывание товара")
+    @RepeatedTest(10)
     public void saveProduct() {
         Random r = new Random();
         int n = r.nextInt(1, 5);
@@ -117,6 +119,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
+    @RepeatedTest(10)
     public void addToCart() {
         Random r = new Random();
         int n = r.nextInt(1, 5);
