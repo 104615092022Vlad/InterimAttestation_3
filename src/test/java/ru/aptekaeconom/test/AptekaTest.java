@@ -32,7 +32,7 @@ public class AptekaTest {
     @RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(0, 5);
+        int n = r.nextInt(0, 4);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
@@ -47,7 +47,6 @@ public class AptekaTest {
 
 
         step("Выбор подкатегории", () -> {
-            Thread.sleep(10);
             category.hover();
             subcategory.click();
         });
