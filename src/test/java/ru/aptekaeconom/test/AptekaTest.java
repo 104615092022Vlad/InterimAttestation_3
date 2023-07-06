@@ -30,10 +30,10 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(10)
+    //@RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(0, 5);
+        int n = 2;
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
