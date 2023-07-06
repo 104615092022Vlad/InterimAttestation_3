@@ -73,10 +73,10 @@ public class AptekaTest {
     @DisplayName("Откладывание товара")
     public void saveProduct() {
         Random r = new Random();
-        int n = r.nextInt(8);
+        int n = 0;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = r.nextInt(1, 8);
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
@@ -120,10 +120,10 @@ public class AptekaTest {
     @DisplayName("Добавление отложенного товара в корзину")
     public void addToCart() {
         Random r = new Random();
-        int n = r.nextInt(8);
+        int n = 0;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = r.nextInt(1, 8);
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
