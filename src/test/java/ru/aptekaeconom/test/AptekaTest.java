@@ -38,7 +38,7 @@ public class AptekaTest {
         ProductsPage productsPage = new ProductsPage();
 
         ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = r.nextInt(subcategories.size());
+        int indexOfSubcategory = r.nextInt(0, 5);
         SelenideElement subcategory = subcategories.get(indexOfSubcategory);
         categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
