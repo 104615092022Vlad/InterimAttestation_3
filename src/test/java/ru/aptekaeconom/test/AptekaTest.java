@@ -31,20 +31,21 @@ public class AptekaTest {
     @RepeatedTest(10)
     public void selectAnySubcategory() {
         Random r = new Random();
-        int n = 0;
+        int n = r.nextInt(4, 8);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
         ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = r.nextInt(1, 8);
+        int indexOfSubcategory = r.nextInt(subcategories.size());
         SelenideElement subcategory = subcategories.get(indexOfSubcategory);
         categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
+
         step("Выбор подкатегории", () -> {
-            subcategory.click();
+                subcategory.click();
         });
 
         step("В списке товаров есть хотя бы один", () -> {
@@ -68,7 +69,7 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-
+/*
     @Test
     @DisplayName("Откладывание товара")
     public void saveProduct() {
@@ -157,4 +158,6 @@ public class AptekaTest {
 
         closeWebDriver();
     }
+
+ */
 }

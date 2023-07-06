@@ -69,7 +69,7 @@ public class PageTop {
             case 5:
                 $(".table-menu .dropdown:nth-child(6)").hover();
                 $$(" .dropdown-submenu").get(1).hover();
-                subcategories = $$(".table-menu .dropdown:nth-child6) ul li:nth-child(2) ul li");
+                subcategories = $$(".table-menu .dropdown:nth-child(6) ul li:nth-child(2) ul li");
                 break;
             case 6:
                 $(".table-menu .dropdown:nth-child(6)").hover();
