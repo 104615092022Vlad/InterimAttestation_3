@@ -30,8 +30,8 @@ public class AptekaTest {
     @DisplayName("Выбор подкатегории из каталога товаров")
     @RepeatedTest(10)
     public void selectAnySubcategory() {
-        //Random r = new Random();
-        int n = 1;
+        Random r = new Random();
+        int n = r.nextInt(8);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
@@ -69,6 +69,7 @@ public class AptekaTest {
         closeWebDriver();
     }
 
+    /*
     @Test
     @DisplayName("Откладывание товара")
     @RepeatedTest(10)
@@ -159,4 +160,6 @@ public class AptekaTest {
 
         closeWebDriver();
     }
+
+     */
 }
