@@ -28,6 +28,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
+    @RepeatedTest(10)
     public void selectAnySubcategory() {
         Random r = new Random();
         int n = 5;
