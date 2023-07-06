@@ -30,15 +30,15 @@ public class AptekaTest {
     @DisplayName("Выбор подкатегории из каталога товаров")
     @RepeatedTest(10)
     public void selectAnySubcategory() {
-        Random r = new Random();
-        int n = r.nextInt(1, 5);
+        //Random r = new Random();
+        int n = 1;
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
         ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = r.nextInt(0, subcategories.size());
+        int indexOfSubcategory = subcategories.size() - 1;
         SelenideElement subcategory = subcategories.get(indexOfSubcategory);
         categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
