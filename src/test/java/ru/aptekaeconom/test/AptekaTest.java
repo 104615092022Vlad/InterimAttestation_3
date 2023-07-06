@@ -25,7 +25,6 @@ public class AptekaTest {
         Selenide.webdriver().driver().getWebDriver().manage().addCookie(region);
         refresh();
         $(".region_wrapper .confirm_region").shouldNotBe(Condition.visible);
-        Selenide.webdriver().driver().getWebDriver().manage().window().fullscreen();
     }
 
     @Test
@@ -33,7 +32,7 @@ public class AptekaTest {
     @RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(0,5);
+        int n = r.nextInt(0, 5);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
@@ -49,9 +48,10 @@ public class AptekaTest {
 
         step("Выбор подкатегории", () -> {
             category.hover();
+            Thread.sleep(5000);
             subcategory.click();
         });
-        Thread.sleep(5000);
+
         step("В списке товаров есть хотя бы один", () -> {
             assertThat(productsPage.productsGrid.size()).isGreaterThanOrEqualTo(1);
         });
