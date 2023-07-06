@@ -39,13 +39,16 @@ public class AptekaTest {
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
-        ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = subcategories.size() - 1;
-        SelenideElement subcategory = subcategories.get(indexOfSubcategory);
-        categoryName = pageTop.selectCategory(n).getText();
+        SelenideElement category = $$(".table-menu .dropdown").get(n);
+        SelenideElement subcategory = category.$$(" li").get(n);
+        SelenideElement sideSubcategory =  $$(".left_block .menu .full").get(n).$$(" li").get(n);
+
+        categoryName = category.getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
+
         step("Выбор подкатегории", () -> {
+            category.hover();
             subcategory.click();
         });
 
@@ -63,7 +66,7 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(productsPage.selectSideSubcategory(n).get(indexOfSubcategory).
+            assertThat(sideSubcategory.
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
