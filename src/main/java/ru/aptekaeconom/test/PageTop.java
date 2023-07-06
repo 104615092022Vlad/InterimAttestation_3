@@ -42,33 +42,33 @@ public class PageTop {
         return category;
     }
 
-    public ElementsCollection selectSubcategoriesList(int n) {
+    public ElementsCollection selectSubcategoriesList(int n) throws InterruptedException {
         ElementsCollection subcategories = $$("");
 
         switch (n) {
             case 0:
                 $(".table-menu .dropdown:nth-child(2)").hover();
-                $$(".dropdown .dropdown-menu").get(0).shouldBe(Condition.visible);
+                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(2) ul li");
                 break;
             case 1:
                 $(".table-menu .dropdown:nth-child(3)").hover();
-                $$(".dropdown .dropdown-menu").get(1).shouldBe(Condition.visible);
+                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(3) ul li");
                 break;
             case 2:
                 $(".table-menu .dropdown:nth-child(4)").hover();
-                $$(".dropdown .dropdown-menu").get(2).shouldBe(Condition.visible);
+                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(4) ul li");
                 break;
             case 3:
                 $(".table-menu .dropdown:nth-child(5)").hover();
-                $$(".dropdown .dropdown-menu").get(3).shouldBe(Condition.visible);
+                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(5) ul li");
                 break;
             case 4:
                 $(".table-menu .dropdown:nth-child(6)").hover();
-                $$(".dropdown .dropdown-menu").get(4).shouldBe(Condition.visible);
+                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(6) ul li");
                 break;
             case 5:

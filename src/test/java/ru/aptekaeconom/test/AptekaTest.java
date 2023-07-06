@@ -29,7 +29,7 @@ public class AptekaTest {
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
     @RepeatedTest(10)
-    public void selectAnySubcategory() {
+    public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
         int n = r.nextInt(0, 5);
         String categoryName;
