@@ -47,8 +47,8 @@ public class AptekaTest {
 
 
         step("Выбор подкатегории", () -> {
-            category.hover();
             Thread.sleep(5000);
+            category.hover();
             subcategory.click();
         });
 
