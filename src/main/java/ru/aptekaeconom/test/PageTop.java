@@ -1,7 +1,6 @@
 package ru.aptekaeconom.test;
 
 import com.codeborne.selenide.*;
-import org.assertj.core.internal.Conditions;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -42,49 +41,45 @@ public class PageTop {
         return category;
     }
 
-    public ElementsCollection selectSubcategoriesList(int n) throws InterruptedException {
+    public ElementsCollection selectSubcategoriesList(int n) {
         ElementsCollection subcategories = $$("");
 
         switch (n) {
             case 0:
                 $(".table-menu .dropdown:nth-child(2)").hover();
-                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(2) ul li");
                 break;
             case 1:
                 $(".table-menu .dropdown:nth-child(3)").hover();
-                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(3) ul li");
                 break;
             case 2:
                 $(".table-menu .dropdown:nth-child(4)").hover();
-                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(4) ul li");
                 break;
             case 3:
                 $(".table-menu .dropdown:nth-child(5)").hover();
-                Thread.sleep(5000);
                 subcategories = $$(".table-menu .dropdown:nth-child(5) ul li");
                 break;
             case 4:
                 $(".table-menu .dropdown:nth-child(6)").hover();
-                Thread.sleep(5000);
-                subcategories = $$(".table-menu .dropdown:nth-child(6) ul li");
+                $$(" .dropdown-submenu").get(0).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(6) ul li:nth-child(1) ul li");
                 break;
             case 5:
-                $(".table-menu .dropdown:nth-child(7)").hover();
-                $$(" .dropdown-submenu").get(0).hover();
-                subcategories = $$(".table-menu .dropdown:nth-child(7) ul li:nth-child(1) ul li");
+                $(".table-menu .dropdown:nth-child(6)").hover();
+                $$(" .dropdown-submenu").get(1).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child6) ul li:nth-child(2) ul li");
                 break;
             case 6:
-                $(".table-menu .dropdown:nth-child(7)").hover();
-                $$(" .dropdown-submenu").get(1).hover();
-                subcategories = $$(".table-menu .dropdown:nth-child(7) ul li:nth-child(2) ul li");
+                $(".table-menu .dropdown:nth-child(6)").hover();
+                $$(" .dropdown-submenu").get(2).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(6) ul li:nth-child(3) ul li");
                 break;
             case 7:
-                $(".table-menu .dropdown:nth-child(7)").hover();
-                $$(" .dropdown-submenu").get(2).hover();
-                subcategories = $$(".table-menu .dropdown:nth-child(7) ul li:nth-child(3) ul li");
+                $(".table-menu .dropdown:nth-child(6)").hover();
+                $$(" .dropdown-submenu").get(3).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(6) ul li:nth-child(4) ul li");
                 break;
         }
         return subcategories;

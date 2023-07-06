@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 
 import java.util.*;
 
@@ -29,25 +28,21 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(20)
-    public void selectAnySubcategory() throws InterruptedException{
+    public void selectAnySubcategory() {
         Random r = new Random();
-        int n = 4;
+        int n = 5;
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
-        SelenideElement category = $$(".table-menu .dropdown").get(n);
-        SelenideElement subcategory = category.$$(" li").get(n);
-        SelenideElement sideSubcategory =  $$(".left_block .menu .full").get(n).$$(" li").get(n);
-
-        categoryName = category.getText();
+        ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
+        int indexOfSubcategory = r.nextInt(subcategories.size());
+        SelenideElement subcategory = subcategories.get(indexOfSubcategory);
+        categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
-
         step("Выбор подкатегории", () -> {
-            category.hover();
             subcategory.click();
         });
 
@@ -65,30 +60,28 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(sideSubcategory.
+            assertThat(productsPage.selectSideSubcategory(n).get(indexOfSubcategory).
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
 
         closeWebDriver();
     }
-
-    /*
+/*
     @Test
     @DisplayName("Откладывание товара")
-    @RepeatedTest(10)
     public void saveProduct() {
         Random r = new Random();
-        int n = r.nextInt(1, 5);
+        int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(0, pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = r.nextInt(0, productsPage.productsGrid.size());
+        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
         SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
@@ -124,13 +117,12 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
-    @RepeatedTest(10)
     public void addToCart() {
         Random r = new Random();
-        int n = r.nextInt(1, 5);
+        int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(0, pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
 
         step("Выбор подкатегории из каталога", () -> {
             pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
@@ -165,5 +157,5 @@ public class AptekaTest {
         closeWebDriver();
     }
 
-     */
+ */
 }

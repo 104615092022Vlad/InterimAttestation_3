@@ -42,7 +42,7 @@ public class ProductsPage {
                 sideSubcategories = sideCategories.get(n).$$(":nth-child(8) ul li");
                 break;
         }
-    return sideSubcategories;
+        return sideSubcategories;
     }
 
 
