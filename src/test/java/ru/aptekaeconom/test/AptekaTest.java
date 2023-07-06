@@ -68,7 +68,7 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-/*
+
     @Test
     @DisplayName("Откладывание товара")
     public void saveProduct() {
@@ -157,6 +157,4 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-
- */
 }
