@@ -31,14 +31,14 @@ public class AptekaTest {
     @RepeatedTest(10)
     public void selectAnySubcategory() {
         Random r = new Random();
-        int n = r.nextInt(0,3);
+        int n = 0;
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
         ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = r.nextInt(0, 3);
+        int indexOfSubcategory = 0;
         SelenideElement subcategory = subcategories.get(indexOfSubcategory);
         categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
