@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
 
 import java.util.*;
 
@@ -24,6 +25,7 @@ public class AptekaTest {
         Selenide.webdriver().driver().getWebDriver().manage().addCookie(region);
         refresh();
         $(".region_wrapper .confirm_region").shouldNotBe(Condition.visible);
+        Selenide.webdriver().driver().getWebDriver().manage().window().fullscreen();
     }
 
     @Test
