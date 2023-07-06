@@ -33,7 +33,7 @@ public class AptekaTest {
     @RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(0,3);
+        int n = r.nextInt(0,5);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
