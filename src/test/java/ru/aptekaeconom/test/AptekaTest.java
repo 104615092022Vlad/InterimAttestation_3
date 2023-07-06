@@ -51,7 +51,7 @@ public class AptekaTest {
             category.hover();
             subcategory.click();
         });
-
+        Thread.sleep(5000);
         step("В списке товаров есть хотя бы один", () -> {
             assertThat(productsPage.productsGrid.size()).isGreaterThanOrEqualTo(1);
         });
