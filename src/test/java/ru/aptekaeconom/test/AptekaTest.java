@@ -29,10 +29,8 @@ public class AptekaTest {
         executeJavaScript("window.scrollBy(0,400)");
     }
 
-    /*
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    //@RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException {
         Random r = new Random();
         int indexOfCategory = r.nextInt(8);
@@ -75,11 +73,8 @@ public class AptekaTest {
         closeWebDriver();
     }
 
-     */
-
     @Test
     @DisplayName("Откладывание товара")
-    @RepeatedTest(10)
     public void saveProduct() {
         Random r = new Random();
         int indexOfCategory = r.nextInt(8);
@@ -130,25 +125,31 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-/*
+
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
     public void addToCart() {
         Random r = new Random();
-        int n = 0;
+        int indexOfCategory = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(1, 8);
+        SelenideElement category = pageTop.selectCategory(indexOfCategory);
 
-        step("Выбор подкатегории из каталога", () -> {
-            pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
+        step("Выбор непустой подкатегории из каталога", () -> {
+            int indexOfSubcategory = 0;
+            do {
+                executeJavaScript("window.scrollBy(0,400)");
+                pageTop.catalog.hover();
+                pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory).click();
+                indexOfSubcategory++;
+            }
+            while (!productsPage.productsGrid.exists());
         });
 
-        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
-        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
+        int indexOfProduct = r.nextInt(productsPage.productsGridItems.size());
+        SelenideElement product = productsPage.productsGridItems.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
-            productsPage.grid.shouldBe(Condition.visible);
             product.$(".wish_item_button").click();
         });
 
@@ -172,6 +173,4 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-
- */
 }
