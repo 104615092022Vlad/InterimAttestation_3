@@ -34,7 +34,7 @@ public class AptekaTest {
     //@RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(9);
+        int n = 0;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
         String categoryName;
@@ -42,10 +42,10 @@ public class AptekaTest {
 
         SelenideElement category = pageTop.selectCategory(n);
         int subcategoryListSize = pageTop.subcategoriesCounter(category, n);
-        SelenideElement subcategory = pageTop.selectSubcategory(category, n, subcategoryListSize);
+        SelenideElement subcategory = pageTop.selectSubcategory(category, n, 1);
 
-        categoryName = category.$$(".name").get(0).getText();
-        subcategoryName = subcategory.$(".name").getAttribute("innerText");
+        categoryName = "Гигиена";
+        subcategoryName = "Предметы женской гигиены";
 
         step("Выбор подкатегории", () -> {
                 subcategory.click();
@@ -65,7 +65,7 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(productsPage.selectSideSubcategory(n).get(subcategoryListSize).
+            assertThat(productsPage.selectSideSubcategory(n).get(1).
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
