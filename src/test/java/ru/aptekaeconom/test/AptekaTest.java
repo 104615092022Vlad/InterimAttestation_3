@@ -31,6 +31,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
+    @RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException {
         Random r = new Random();
         int indexOfCategory = r.nextInt(8);
@@ -44,7 +45,7 @@ public class AptekaTest {
         int indexOfSubcategory = r.nextInt(subcategoryListSize);
         SelenideElement subcategory = pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory);
 
-        categoryName = category.$("a").getAttribute("title"); //ToDo попробовать поменять селектор на такой же как в subcategoryName
+        categoryName = category.$("span.name").getAttribute("innerText");
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
@@ -75,6 +76,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Откладывание товара")
+    @RepeatedTest(10)
     public void saveProduct() {
         Random r = new Random();
         int indexOfCategory = r.nextInt(8);
@@ -128,6 +130,7 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
+    @RepeatedTest(10)
     public void addToCart() {
         Random r = new Random();
         int indexOfCategory = r.nextInt(8);
