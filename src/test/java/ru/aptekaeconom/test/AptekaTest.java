@@ -7,6 +7,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
+import org.openqa.selenium.JavascriptExecutor;
+
 import java.util.*;
 
 import static com.codeborne.selenide.Condition.*;
@@ -24,25 +26,26 @@ public class AptekaTest {
         Selenide.webdriver().driver().getWebDriver().manage().addCookie(region);
         refresh();
         $(".region_wrapper .confirm_region").shouldNotBe(Condition.visible);
+        executeJavaScript("window.scrollBy(0,400)");
     }
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(10)
-    public void selectAnySubcategory() {
+    //@RepeatedTest(10)
+    public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(4, 8);
-        String categoryName;
-        String subcategoryName;
+        int n = r.nextInt(9);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
+        String categoryName;
+        String subcategoryName;
 
-        ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = r.nextInt(subcategories.size());
-        SelenideElement subcategory = subcategories.get(indexOfSubcategory);
-        categoryName = pageTop.selectCategory(n).getText();
-        subcategoryName = subcategory.$("span.name").getAttribute("innerText");
+        SelenideElement category = pageTop.selectCategory(n);
+        int subcategoryListSize = pageTop.subcategoriesCounter(category, n);
+        SelenideElement subcategory = pageTop.selectSubcategory(category, n, subcategoryListSize);
 
+        categoryName = category.$$(".name").get(0).getText();
+        subcategoryName = subcategory.$(".name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
                 subcategory.click();
@@ -62,7 +65,7 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(productsPage.selectSideSubcategory(n).get(indexOfSubcategory).
+            assertThat(productsPage.selectSideSubcategory(n).get(subcategoryListSize).
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
@@ -70,6 +73,7 @@ public class AptekaTest {
         closeWebDriver();
     }
 /*
+    //ToDo: добавить отбор подкатегории по наличию товаров для тестов 2 и 3.
     @Test
     @DisplayName("Откладывание товара")
     public void saveProduct() {
