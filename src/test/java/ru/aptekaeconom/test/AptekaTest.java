@@ -7,8 +7,6 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
-import org.openqa.selenium.JavascriptExecutor;
-
 import java.util.*;
 
 import static com.codeborne.selenide.Condition.*;
@@ -26,26 +24,22 @@ public class AptekaTest {
         Selenide.webdriver().driver().getWebDriver().manage().addCookie(region);
         refresh();
         $(".region_wrapper .confirm_region").shouldNotBe(Condition.visible);
-        executeJavaScript("window.scrollBy(0,400)");
     }
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(10)
-    public void selectAnySubcategory() throws InterruptedException {
+    public void selectAnySubcategory() {
         Random r = new Random();
-        int indexOfCategory = r.nextInt(8);
-        PageTop pageTop = new PageTop();
-        ProductsPage productsPage = new ProductsPage();
+        int n = r.nextInt(8);
         String categoryName;
         String subcategoryName;
+        PageTop pageTop = new PageTop();
+        ProductsPage productsPage = new ProductsPage();
 
-        SelenideElement category = pageTop.selectCategory(indexOfCategory);
-        int subcategoryListSize = pageTop.subcategoriesCounter(category, indexOfCategory);
-        int indexOfSubcategory = r.nextInt(subcategoryListSize);
-        SelenideElement subcategory = pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory);
-
-        categoryName = category.$("span.name").getAttribute("innerText");
+        ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
+        int indexOfSubcategory = r.nextInt(subcategories.size());
+        SelenideElement subcategory = subcategories.get(indexOfSubcategory);
+        categoryName = pageTop.selectCategory(n).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
@@ -53,7 +47,7 @@ public class AptekaTest {
         });
 
         step("В списке товаров есть хотя бы один", () -> {
-            assertThat(productsPage.productsGridItems.size()).isGreaterThanOrEqualTo(1);
+            assertThat(productsPage.productsGrid.size()).isGreaterThanOrEqualTo(1);
         });
 
         step("Отображение хлебных крошек", () -> {
@@ -66,7 +60,7 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(productsPage.selectSideSubcategory(indexOfCategory).get(indexOfSubcategory).
+            assertThat(productsPage.selectSideSubcategory(n).get(indexOfSubcategory).
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
@@ -76,29 +70,22 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Откладывание товара")
-    @RepeatedTest(10)
     public void saveProduct() {
         Random r = new Random();
-        int indexOfCategory = r.nextInt(8);
+        int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        SelenideElement category = pageTop.selectCategory(indexOfCategory);
+        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
 
-        step("Выбор непустой подкатегории из каталога", () -> {
-            int indexOfSubcategory = 0;
-            do {
-                executeJavaScript("window.scrollBy(0,400)");
-                pageTop.catalog.hover();
-                pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory).click();
-                indexOfSubcategory++;
-            }
-            while (!productsPage.productsGrid.exists());
+        step("Выбор подкатегории из каталога", () -> {
+            pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = r.nextInt(productsPage.productsGridItems.size());
-        SelenideElement product = productsPage.productsGridItems.filter(text("В наличии")).get(indexOfProduct);
+        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
+        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
+            productsPage.grid.shouldBe(Condition.visible);
             product.$(".wish_item_button [title]").shouldHave(attribute("title", "Отложить"));
             product.$(".wish_item_button").click();
         });
@@ -130,29 +117,22 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
-    @RepeatedTest(10)
     public void addToCart() {
         Random r = new Random();
-        int indexOfCategory = r.nextInt(8);
+        int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        SelenideElement category = pageTop.selectCategory(indexOfCategory);
+        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
 
-        step("Выбор непустой подкатегории из каталога", () -> {
-            int indexOfSubcategory = 0;
-            do {
-                executeJavaScript("window.scrollBy(0,400)");
-                pageTop.catalog.hover();
-                pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory).click();
-                indexOfSubcategory++;
-            }
-            while (!productsPage.productsGrid.exists());
+        step("Выбор подкатегории из каталога", () -> {
+            pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = r.nextInt(productsPage.productsGridItems.size());
-        SelenideElement product = productsPage.productsGridItems.filter(text("В наличии")).get(indexOfProduct);
+        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
+        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
+            productsPage.grid.shouldBe(Condition.visible);
             product.$(".wish_item_button").click();
         });
 

@@ -7,52 +7,81 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class PageTop {
     SelenideElement wishButton = $(".basket-link.delay.with_price");
-
-    SelenideElement catalog = $(".catalog .dropdown-toggle");
-    ElementsCollection categories = $$(".wide_menu .dropdown-submenu");
+    ElementsCollection categories = $$(".dropdown .dropdown-toggle");
 
     public SelenideElement selectCategory(int n) {
-        SelenideElement category;
-        catalog.hover();
+        SelenideElement category = $("");
 
-        category = switch (n) {
-            case 0 -> categories.get(0);
-            case 1 -> categories.get(1);
-            case 2 -> categories.get(2);
-            case 3 -> categories.get(3);
-            case 4 -> categories.get(4);
-            case 5 -> categories.get(5);
-            case 6 -> categories.get(6);
-            case 7 -> categories.get(7);
-            default -> $("");
-        };
-
+        switch(n) {
+            case 0:
+                category = categories.get(0);
+                break;
+            case 1:
+                category = categories.get(1);
+                break;
+            case 2:
+                category = categories.get(2);
+                break;
+            case 3:
+                category = categories.get(3);
+                break;
+            case 4:
+                category = categories.get(4);
+                break;
+            case 5:
+                category = categories.get(6);
+                break;
+            case 6:
+                category = categories.get(7);
+                break;
+            case 7:
+                category = categories.get(8);
+                break;
+        }
         return category;
     }
 
-    public int subcategoriesCounter(SelenideElement category, int n) {
-        int amount = switch (n) {
-            case 0, 3, 4, 6, 7 -> category.$$(" ul li").size();
-            case 1, 2, 5 -> category.$$(" ul li").size() - 1;
-            default -> 0;
-        };
-
-        return amount;
-    }
-
-    public SelenideElement selectSubcategory(SelenideElement category, int n, int m) {
-        SelenideElement subcategory;
+    public ElementsCollection selectSubcategoriesList(int n) {
+        ElementsCollection subcategories = $$("");
 
         switch (n) {
-            case 0, 3, 4, 6, 7 -> subcategory = category.$$(" ul li").get(m);
-            case 1, 2, 5 -> {
-                category.$(" ul li .more_items").click();
-                subcategory = category.$$(" ul li").get(m);
-            }
-            default -> subcategory = $("");
+            case 0:
+                $(".table-menu .dropdown:nth-child(2)").hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(2) ul li");
+                break;
+            case 1:
+                $(".table-menu .dropdown:nth-child(3)").hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(3) ul li");
+                break;
+            case 2:
+                $(".table-menu .dropdown:nth-child(4)").hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(4) ul li");
+                break;
+            case 3:
+                $(".table-menu .dropdown:nth-child(5)").hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(5) ul li");
+                break;
+            case 4:
+                $(".table-menu .dropdown:nth-child(6)").hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(6) ul li");
+                break;
+            case 5:
+                $(".table-menu .dropdown:nth-child(7)").hover();
+                $$(" .dropdown-submenu").get(0).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(7) ul li:nth-child(1) ul li");
+                break;
+            case 6:
+                $(".table-menu .dropdown:nth-child(7)").hover();
+                $$(" .dropdown-submenu").get(1).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(7) ul li:nth-child(2) ul li");
+                break;
+            case 7:
+                $(".table-menu .dropdown:nth-child(7)").hover();
+                $$(" .dropdown-submenu").get(2).hover();
+                subcategories = $$(".table-menu .dropdown:nth-child(7) ul li:nth-child(3) ul li");
+                break;
         }
-
-        return subcategory;
+        return subcategories;
     }
 
     SelenideElement pageTitle = $("#pagetitle");

@@ -10,23 +10,38 @@ public class ProductsPage {
 
     ElementsCollection sideCategories = $$(".left_block .menu .full");
 
-    SelenideElement productsGrid = $(".block_list");
-    ElementsCollection productsGridItems = productsGrid.$$(" .item_wrap");
+    SelenideElement grid = $(".block_list");
+    ElementsCollection productsGrid = $$(".catalog_item_wrapp");
 
 
     public ElementsCollection selectSideSubcategory(int n) {
-
-        ElementsCollection sideSubcategories = switch (n + 1) {
-            case 1 -> sideCategories.get(n).$$(":nth-child(1) ul li");
-            case 2 -> sideCategories.get(n).$$(":nth-child(2) ul li");
-            case 3 -> sideCategories.get(n).$$(":nth-child(3) ul li");
-            case 4 -> sideCategories.get(n).$$(":nth-child(4) ul li");
-            case 5 -> sideCategories.get(n).$$(":nth-child(5) ul li");
-            case 6 -> sideCategories.get(n).$$(":nth-child(6) ul li");
-            case 7 -> sideCategories.get(n).$$(":nth-child(7) ul li");
-            case 8 -> sideCategories.get(n).$$(":nth-child(8) ul li");
-            default -> $$("");
-        };
+        ElementsCollection sideSubcategories = $$("");
+        switch (n + 1) {
+            case 1:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(1) ul li");
+                break;
+            case 2:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(2) ul li");
+                break;
+            case 3:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(3) ul li");
+                break;
+            case 4:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(4) ul li");
+                break;
+            case 5:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(5) ul li");
+                break;
+            case 6:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(6) ul li");
+                break;
+            case 7:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(7) ul li");
+                break;
+            case 8:
+                sideSubcategories = sideCategories.get(n).$$(":nth-child(8) ul li");
+                break;
+        }
         return sideSubcategories;
     }
 
