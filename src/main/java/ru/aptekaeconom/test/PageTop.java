@@ -32,8 +32,8 @@ public class PageTop {
 
     public int subcategoriesCounter(SelenideElement category, int n) {
         int amount = switch (n) {
-            case 0, 3, 4, 6, 7 -> category.$$(" ul li").size() - 1;
-            case 1, 2, 5 -> category.$$(" ul li").size() - 2;
+            case 0, 3, 4, 6, 7 -> category.$$(" ul li").size();
+            case 1, 2, 5 -> category.$$(" ul li").size() - 1;
             default -> 0;
         };
 

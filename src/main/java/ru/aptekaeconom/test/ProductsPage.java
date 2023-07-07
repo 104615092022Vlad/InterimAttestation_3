@@ -10,8 +10,8 @@ public class ProductsPage {
 
     ElementsCollection sideCategories = $$(".left_block .menu .full");
 
-    SelenideElement grid = $(".block_list");
-    ElementsCollection productsGrid = $$(".catalog_item_wrapp");
+    SelenideElement productsGrid = $(".block_list");
+    ElementsCollection productsGridItems = productsGrid.$$(" .item_wrap");
 
 
     public ElementsCollection selectSideSubcategory(int n) {

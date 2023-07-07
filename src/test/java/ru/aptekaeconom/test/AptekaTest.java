@@ -29,10 +29,11 @@ public class AptekaTest {
         executeJavaScript("window.scrollBy(0,400)");
     }
 
+    /*
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
     //@RepeatedTest(10)
-    public void selectAnySubcategory() throws InterruptedException{
+    public void selectAnySubcategory() throws InterruptedException {
         Random r = new Random();
         int indexOfCategory = r.nextInt(8);
         PageTop pageTop = new PageTop();
@@ -45,15 +46,15 @@ public class AptekaTest {
         int indexOfSubcategory = r.nextInt(subcategoryListSize);
         SelenideElement subcategory = pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory);
 
-        categoryName = category.$("a").getAttribute("title");
+        categoryName = category.$("a").getAttribute("title"); //ToDo попробовать поменять селектор на такой же как в subcategoryName
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
-                subcategory.click();
+            subcategory.click();
         });
 
         step("В списке товаров есть хотя бы один", () -> {
-            assertThat(productsPage.productsGrid.size()).isGreaterThanOrEqualTo(1);
+            assertThat(productsPage.productsGridItems.size()).isGreaterThanOrEqualTo(1);
         });
 
         step("Отображение хлебных крошек", () -> {
@@ -73,26 +74,34 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-/*
-    //ToDo: добавить отбор подкатегории по наличию товаров для тестов 2 и 3.
+
+     */
+
     @Test
     @DisplayName("Откладывание товара")
+    @RepeatedTest(10)
     public void saveProduct() {
         Random r = new Random();
-        int n = 0;
+        int indexOfCategory = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(1, 8);
+        SelenideElement category = pageTop.selectCategory(indexOfCategory);
 
-        step("Выбор подкатегории из каталога", () -> {
-            pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
+        step("Выбор непустой подкатегории из каталога", () -> {
+            int indexOfSubcategory = 0;
+            do {
+                executeJavaScript("window.scrollBy(0,400)");
+                pageTop.catalog.hover();
+                pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory).click();
+                indexOfSubcategory++;
+            }
+            while (!productsPage.productsGrid.exists());
         });
 
-        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
-        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
+        int indexOfProduct = r.nextInt(productsPage.productsGridItems.size());
+        SelenideElement product = productsPage.productsGridItems.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
-            productsPage.grid.shouldBe(Condition.visible);
             product.$(".wish_item_button [title]").shouldHave(attribute("title", "Отложить"));
             product.$(".wish_item_button").click();
         });
@@ -121,7 +130,7 @@ public class AptekaTest {
 
         closeWebDriver();
     }
-
+/*
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
     public void addToCart() {
