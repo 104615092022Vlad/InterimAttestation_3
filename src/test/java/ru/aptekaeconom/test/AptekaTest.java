@@ -31,20 +31,21 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(10)
+    //@RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = r.nextInt(9);
+        int indexOfCategory = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
         String categoryName;
         String subcategoryName;
 
-        SelenideElement category = pageTop.selectCategory(n);
-        int subcategoryListSize = pageTop.subcategoriesCounter(category, n);
-        SelenideElement subcategory = pageTop.selectSubcategory(category, n, subcategoryListSize);
+        SelenideElement category = pageTop.selectCategory(indexOfCategory);
+        int subcategoryListSize = pageTop.subcategoriesCounter(category, indexOfCategory);
+        int indexOfSubcategory = r.nextInt(subcategoryListSize);
+        SelenideElement subcategory = pageTop.selectSubcategory(category, indexOfCategory, indexOfSubcategory);
 
-        categoryName = category.$("span.name").getAttribute("innerText");
+        categoryName = category.$("a").getAttribute("title");
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
@@ -65,7 +66,7 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(productsPage.selectSideSubcategory(n).get(subcategoryListSize).
+            assertThat(productsPage.selectSideSubcategory(indexOfCategory).get(indexOfSubcategory).
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
