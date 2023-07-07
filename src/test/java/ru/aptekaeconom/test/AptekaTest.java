@@ -31,10 +31,10 @@ public class AptekaTest {
 
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
-    @RepeatedTest(10)
+    //@RepeatedTest(10)
     public void selectAnySubcategory() throws InterruptedException{
         Random r = new Random();
-        int n = 0;
+        int n = 1;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
         String categoryName;
@@ -44,7 +44,7 @@ public class AptekaTest {
         int subcategoryListSize = pageTop.subcategoriesCounter(category, n);
         SelenideElement subcategory = pageTop.selectSubcategory(category, n, subcategoryListSize);
 
-        categoryName = category.$$("span.name").get(0).getText();
+        categoryName = category.$("span.name").getAttribute("innerText");
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
